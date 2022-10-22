@@ -310,21 +310,22 @@ public class SpendinGoodPage {
  public WebElement allowBackorders;
  @FindBy(xpath = "//input[@id='wcfm_products_simple_draft_button']")
  public WebElement editProductKismindakisubmitButonu;
- @FindBy(xpath = "//a/input[@value='View']")
+ @FindBy(xpath = "//a/input[@value='Preview']")
  public WebElement editProductKismindakiViewButonu;
  @FindBy(xpath = "//script[@id='wcfm_core_js-js-extra']")
  public List<WebElement> notifikasyonMesajlari;
- @FindBy(xpath = "//*[@class='stock in-stock']")
+ @FindBy(xpath = "//p[@class='stock in-stock']")
  public WebElement mevcutStockMiktari;
-
-
-
-
-
-
-
-
-
+@FindBy(xpath = "//*[@class='wcfmfa fa-cogs']")
+public WebElement dashboardSettings;
+@FindBy(xpath = "//*[@class='wcfmfa fa-truck']")
+public WebElement settingButonunaTikladiktanSonraCikanShippingButonu;
+@FindBy(xpath = "//*[@id='wcfmmp_pt']")
+public WebElement processingTimeOptions;
+@FindBy(xpath = "//form//input[@id='wcfm_settings_save_button']")
+public WebElement saveButonu;
+@FindBy(xpath = "//div[@class='wcfm-message wcfm-success']")
+public WebElement savedSuccessfullyYazisi;
 
 
 

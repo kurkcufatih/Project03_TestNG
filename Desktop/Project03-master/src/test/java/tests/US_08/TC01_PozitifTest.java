@@ -20,7 +20,7 @@ public class TC01_PozitifTest {
     Actions actions = new Actions(Driver.getDriver());
 
     @Test
-    public void US008_StockAndOrderManagement_PozitifTest() throws InterruptedException, IOException {
+    public void US08_TC01_StockAndOrderManagement_PozitifTest() throws InterruptedException, IOException {
         Driver.getDriver().get(ConfigReader.getProperty("spendingGoodUrl"));
         SpendinGoodPage spendinGoodPage = new SpendinGoodPage();
 
@@ -42,10 +42,8 @@ public class TC01_PozitifTest {
 
         //kullanici store manager butonuna tiklar
         spendinGoodPage.storeManager.click();
-        Thread.sleep(2000);
 
         //kullanici dasboard kismindan products butonuna tiklar
-        Thread.sleep(2000);
         spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu.click();
 
         //kullanici stock miktarini degistirecegi urun uzerindeki edit buttonuna tiklar
@@ -62,24 +60,21 @@ public class TC01_PozitifTest {
         select.selectByIndex(1);
 
         //kullanici submit butonuna tiklar
-        JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
-        jse.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakisubmitButonu);
-        jse.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakisubmitButonu);
-        actions.sendKeys(Keys.ENTER).perform();
+        spendinGoodPage.editProductKismindakisubmitButonu.click();
+        ReusableMethods.waitFor(10);
 
         //kullanici Product Successfully Published yazisini test eder
         String yazi = "Product Successfully Published";
         Assert.assertFalse(spendinGoodPage.notifikasyonMesajlari.contains(yazi));
-        WebDriverWait wait =new WebDriverWait(Driver.getDriver(),Duration.ofSeconds(15));
+
 
         //kullanici view butonuna tiklar
         actions.moveToElement(spendinGoodPage.editProductKismindakiViewButonu);
         spendinGoodPage.editProductKismindakiViewButonu.click();
 
         //kullanici stock miktari ile girdigi stock miktarinin uyumlulugunu test eder.
-        String actualStoclMiktari = spendinGoodPage.mevcutStockMiktari.getText();
-        String expectedStockMiktari = String.valueOf(10);
-        Assert.assertTrue(actualStoclMiktari.contains(expectedStockMiktari));
+        String expectedStockMiktari = "10 in stock (can be backordered)";
+        Assert.assertEquals(spendinGoodPage.mevcutStockMiktari.getText(),expectedStockMiktari);
 
         //kullanici stock miktarinin goruntusunu alir.
         ReusableMethods.getScreenshot(spendinGoodPage.mevcutStockMiktari.getText());
