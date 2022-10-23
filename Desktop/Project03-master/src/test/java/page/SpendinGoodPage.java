@@ -260,6 +260,43 @@ public class SpendinGoodPage {
     /*US_07(261. ile 299.satır)*/
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*US_08(301. ile 339.satır)*/
     @FindBy(xpath = "//main//div//div[@class='wcfm_menu_items wcfm_menu_wcfm-products']")
     public WebElement storageManagerButonunaTikladiktanSonraCikanProductButtonu;
