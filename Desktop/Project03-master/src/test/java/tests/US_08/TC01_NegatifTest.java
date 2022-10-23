@@ -2,6 +2,7 @@ package tests.US_08;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -13,6 +14,9 @@ import utilities.ReusableMethods;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TC01_NegatifTest {
 
     Actions actions = new Actions(Driver.getDriver());
@@ -40,10 +44,12 @@ public class TC01_NegatifTest {
 
         //kullanici store manager butonuna tiklar
         spendinGoodPage.storeManager.click();
-        Thread.sleep(2000);
 
         //kullanici dasboard kismindan products butonuna tiklar
-        Thread.sleep(2000);
+        ReusableMethods.waitFor(3);
+        JavascriptExecutor jseProduct = (JavascriptExecutor) Driver.getDriver();
+        jseProduct.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
+        jseProduct.executeScript("arguments[0].click();", spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
         spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu.click();
 
         //kullanici stock miktarini degistirecegi urun uzerindeki edit buttonuna tiklar
@@ -60,27 +66,29 @@ public class TC01_NegatifTest {
         select.selectByIndex(1);
 
         //kullanici submit butonuna tiklar
-        JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
-        jse.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakisubmitButonu);
-        jse.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakisubmitButonu);
-        actions.sendKeys(Keys.ENTER).perform();
+        JavascriptExecutor jseSubmit = (JavascriptExecutor) Driver.getDriver();
+        jseSubmit.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakisubmitButonu);
+        jseSubmit.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakisubmitButonu);
 
         //kullanici Product Successfully Published yazisini test eder
-        String yazi = "Product Successfully Published";
-        Assert.assertFalse(spendinGoodPage.notifikasyonMesajlari.contains(yazi));
-        WebDriverWait wait =new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(15));
+        WebDriverWait wait =new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(spendinGoodPage.successfullyPublishedYazisi));
+        Assert.assertTrue(spendinGoodPage.successfullyPublishedYazisi.isDisplayed());
 
         //kullanici view butonuna tiklar
-        actions.moveToElement(spendinGoodPage.editProductKismindakiViewButonu);
-        spendinGoodPage.editProductKismindakiViewButonu.click();
+        JavascriptExecutor jseView = (JavascriptExecutor) Driver.getDriver();
+        jseView.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakiViewButonu);
+        jseView.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakiViewButonu);
 
         //kullanici stock miktari ile girdigi stock miktarinin uyumlulugunu test eder.
-        String actualStoclMiktari = spendinGoodPage.mevcutStockMiktari.getText();
-        String expectedStockMiktari = String.valueOf(10);
-        Assert.assertTrue(actualStoclMiktari.contains(expectedStockMiktari));
+        List<String> handelsList = new ArrayList<>(Driver.getDriver().getWindowHandles());
+        Driver.getDriver().switchTo().window(handelsList.get(1));
+        ReusableMethods.waitFor(3);
+        String expectedStockMiktari = "Available on backorder";
+        Assert.assertEquals(spendinGoodPage.getMevcutStockMiktariNegatifTest.getText(), expectedStockMiktari);
 
         //kullanici stock miktarinin goruntusunu alir.
-        ReusableMethods.getScreenshot(spendinGoodPage.mevcutStockMiktari.getText());
+        ReusableMethods.getScreenshot(spendinGoodPage.getMevcutStockMiktariNegatifTest.getText());
     }
 }
 

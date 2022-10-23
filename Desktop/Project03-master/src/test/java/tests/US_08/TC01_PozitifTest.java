@@ -1,5 +1,6 @@
 package tests.US_08;
 
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
@@ -12,9 +13,10 @@ import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
-
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TC01_PozitifTest {
     Actions actions = new Actions(Driver.getDriver());
@@ -44,6 +46,10 @@ public class TC01_PozitifTest {
         spendinGoodPage.storeManager.click();
 
         //kullanici dasboard kismindan products butonuna tiklar
+        ReusableMethods.waitFor(3);
+        JavascriptExecutor jseProduct = (JavascriptExecutor) Driver.getDriver();
+        jseProduct.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
+        jseProduct.executeScript("arguments[0].click();", spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
         spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu.click();
 
         //kullanici stock miktarini degistirecegi urun uzerindeki edit buttonuna tiklar
@@ -60,24 +66,31 @@ public class TC01_PozitifTest {
         select.selectByIndex(1);
 
         //kullanici submit butonuna tiklar
-        spendinGoodPage.editProductKismindakisubmitButonu.click();
-        ReusableMethods.waitFor(10);
+        JavascriptExecutor jseSubmit = (JavascriptExecutor) Driver.getDriver();
+        jseSubmit.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakisubmitButonu);
+        jseSubmit.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakisubmitButonu);
 
         //kullanici Product Successfully Published yazisini test eder
-        String yazi = "Product Successfully Published";
-        Assert.assertFalse(spendinGoodPage.notifikasyonMesajlari.contains(yazi));
-
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(spendinGoodPage.successfullyPublishedYazisi));
+        Assert.assertTrue(spendinGoodPage.successfullyPublishedYazisi.isDisplayed());
 
         //kullanici view butonuna tiklar
-        actions.moveToElement(spendinGoodPage.editProductKismindakiViewButonu);
+        JavascriptExecutor jseView = (JavascriptExecutor) Driver.getDriver();
+        jseView.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakiViewButonu);
+        jseView.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakiViewButonu);
         spendinGoodPage.editProductKismindakiViewButonu.click();
 
+
         //kullanici stock miktari ile girdigi stock miktarinin uyumlulugunu test eder.
+        List<String> handelsList = new ArrayList<>(Driver.getDriver().getWindowHandles());
+        Driver.getDriver().switchTo().window(handelsList.get(1));
+        ReusableMethods.waitFor(3);
         String expectedStockMiktari = "10 in stock (can be backordered)";
-        Assert.assertEquals(spendinGoodPage.mevcutStockMiktari.getText(),expectedStockMiktari);
+        Assert.assertEquals(spendinGoodPage.mevcutStockMiktariPozitifTest.getText(), expectedStockMiktari);
 
         //kullanici stock miktarinin goruntusunu alir.
-        ReusableMethods.getScreenshot(spendinGoodPage.mevcutStockMiktari.getText());
+        ReusableMethods.getScreenshot(spendinGoodPage.mevcutStockMiktariPozitifTest.getText());
     }
 }
 
