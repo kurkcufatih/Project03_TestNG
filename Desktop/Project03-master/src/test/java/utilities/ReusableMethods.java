@@ -187,7 +187,4 @@ public class ReusableMethods {
         // Belirli butonuna js ile click yapalim
         js.executeScript("arguments[0].click();",webElement);
     }
-
-    public static void waitForVisibility(List<String> notifikasyonMesajlari, Duration ofSeconds) {
-    }
 }

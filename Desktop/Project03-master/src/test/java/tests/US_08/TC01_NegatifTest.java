@@ -1,5 +1,4 @@
 package tests.US_08;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -47,10 +46,9 @@ public class TC01_NegatifTest {
 
         //kullanici dasboard kismindan products butonuna tiklar
         ReusableMethods.waitFor(3);
-        JavascriptExecutor jseProduct = (JavascriptExecutor) Driver.getDriver();
-        jseProduct.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
-        jseProduct.executeScript("arguments[0].click();", spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
-        spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu.click();
+        ReusableMethods.jsExecutorScrool(spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
+        ReusableMethods.jsExecutorClick(spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
+
 
         //kullanici stock miktarini degistirecegi urun uzerindeki edit buttonuna tiklar
         Thread.sleep(3000);
@@ -66,9 +64,8 @@ public class TC01_NegatifTest {
         select.selectByIndex(1);
 
         //kullanici submit butonuna tiklar
-        JavascriptExecutor jseSubmit = (JavascriptExecutor) Driver.getDriver();
-        jseSubmit.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakisubmitButonu);
-        jseSubmit.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakisubmitButonu);
+        ReusableMethods.jsExecutorScrool(spendinGoodPage.editProductKismindakisubmitButonu);
+        ReusableMethods.jsExecutorClick(spendinGoodPage.editProductKismindakisubmitButonu);
 
         //kullanici Product Successfully Published yazisini test eder
         WebDriverWait wait =new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
@@ -76,9 +73,8 @@ public class TC01_NegatifTest {
         Assert.assertTrue(spendinGoodPage.successfullyPublishedYazisi.isDisplayed());
 
         //kullanici view butonuna tiklar
-        JavascriptExecutor jseView = (JavascriptExecutor) Driver.getDriver();
-        jseView.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakiViewButonu);
-        jseView.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakiViewButonu);
+        ReusableMethods.jsExecutorScrool(spendinGoodPage.editProductKismindakiViewButonu);
+        ReusableMethods.jsExecutorClick(spendinGoodPage.editProductKismindakiViewButonu);
 
         //kullanici stock miktari ile girdigi stock miktarinin uyumlulugunu test eder.
         List<String> handelsList = new ArrayList<>(Driver.getDriver().getWindowHandles());

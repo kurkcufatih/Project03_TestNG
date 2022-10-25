@@ -8,23 +8,34 @@ import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
+import utilities.TestBaseRapor;
 
-public class TC_03 {
+public class TC_03 extends TestBaseRapor {
     @Test
     public void testCase03() {
+        extentTest = extentReports.createTest("Ne kadar urun alindigi belli edilmeli", "Vendor olarak Ne kadar urun alindigi belli edilmeli");
         SpendinGoodPage spendingPage=new SpendinGoodPage();
-        Actions actions = new Actions(Driver.getDriver());
-        JavascriptExecutor js= (JavascriptExecutor) Driver.getDriver();
 
         spendingPage.girisYap("oguzEmail","oguzPassword");
+        extentTest.info("Spendinggood sitesine gidildi, vendor olarak giris yapıldı");
+
         ReusableMethods.waitFor(3);
         spendingPage.myAccount.click();
-        js.executeScript("arguments[0].scrollIntoView(true);",spendingPage.dashboard);
+        extentTest.info("My Account butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.dashboard);
         ReusableMethods.waitFor(1);
         spendingPage.storeManager.click();
-        js.executeScript("arguments[0].scrollIntoView(true);",spendingPage.home);
-        js.executeScript("arguments[0].click()",spendingPage.refundButton);
-        js.executeScript("arguments[0].scrollIntoView(true);",spendingPage.home);
+        extentTest.info("Store Manager butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.home);
+        ReusableMethods.jsExecutorClick(spendingPage.refundButton);
+        extentTest.info("Refunds butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.home);
         Assert.assertTrue(spendingPage.orderIdAmount.isDisplayed());
+        extentTest.pass("Order id altında amount oldugu dogrulandi");
+
+
     }
 }

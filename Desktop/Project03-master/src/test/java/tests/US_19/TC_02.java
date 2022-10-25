@@ -2,31 +2,41 @@ package tests.US_19;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
+import utilities.TestBaseRapor;
 
-public class TC_02 {
+public class TC_02 extends TestBaseRapor {
     @Test
     public void testCase02() {
+        extentTest = extentReports.createTest("Islemleri tanımlanmalı", "Vendor takipçilerin hangi işlemleri yaptığını görebilmeli");
         SpendinGoodPage spendingPage = new SpendinGoodPage();
-        Actions actions = new Actions(Driver.getDriver());
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
 
-        spendingPage.girisYap("oguzEmail","oguzPassword");
+        spendingPage.girisYap("oguzEmail", "oguzPassword");
+        extentTest.info("Spendinggood sitesine gidildi, vendor olarak giris yapıldı");
         ReusableMethods.waitFor(3);
+
         spendingPage.myAccount.click();
-        js.executeScript("arguments[0].scrollIntoView(true);", spendingPage.dashboard);
+        extentTest.info("My Account butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.dashboard);
         ReusableMethods.waitFor(1);
         spendingPage.storeManager.click();
-        js.executeScript("arguments[0].scrollIntoView(true);", spendingPage.home);
-        js.executeScript("arguments[0].click()", spendingPage.follewers);
-        js.executeScript("arguments[0].scrollIntoView(true);", spendingPage.home);
+        extentTest.info("Store Manager butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.home);
+        ReusableMethods.jsExecutorClick(spendingPage.follewers);
+        extentTest.info("Follewers butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.home);
         String actualResultStr = spendingPage.follewersTable.getText();
-        if (actualResultStr.equals("No data in the table")) {
-            System.out.println("Tabloda data olmadigi icin actions degeri gorulemedi");
-        }
+        Assert.assertEquals(actualResultStr, "No data in the table");
+        extentTest.fail("Actions kısmında islemler görülemedi");
+
+
     }
 }

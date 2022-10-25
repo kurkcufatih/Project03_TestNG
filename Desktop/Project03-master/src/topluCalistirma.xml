@@ -3,7 +3,15 @@
 <suite name="tum packageleri calistirma">
     <test name="tum testler">
         <packages>
-            <package name="tests.*"/>
+
+
+            <package name="tests.*">
+                <exclude name="tests.US_13"/>
+                <exclude name="tests.US_14"/>
+            </package>
+
+
+
         </packages>
     </test>
 </suite>

@@ -1,5 +1,6 @@
 package tests.US_13;
 
+import com.github.javafaker.Faker;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,9 +20,7 @@ public SpendinGoodPage spendinGoodPage;
 public Actions actions = new Actions(Driver.getDriver());
 public Select select;
 
-
-
-    @Test
+@Test
     public void TC001() {
         spendinGoodPage = new SpendinGoodPage();
         extentTest = extentReports.createTest("Kupon Olusturma Testi", "kupon olusturabilme");
@@ -46,12 +45,12 @@ public Select select;
         ReusableMethods.jsExecutorScrool(spendinGoodPage.couponAddNewButton);
         ReusableMethods.jsExecutorClick(spendinGoodPage.couponAddNewButton);
         extentTest.info("Add new butonuna tiklandi");
-        spendinGoodPage.codeText.sendKeys("FreeShop");
+        spendinGoodPage.codeText.sendKeys(Faker.instance().idNumber().valid());
         extentTest.pass("Code Text Box'a girildi");
     }
     @Test(dependsOnMethods = "TC001")
     public void TC002() {
-        spendinGoodPage.descriptionText.sendKeys("Firsat Urunu");
+        spendinGoodPage.descriptionText.sendKeys("Firsat Urunu2");
         extentTest.pass("Description Text Box'a Tanimlama yapildi");
     }
     @Test(dependsOnMethods = "TC002")

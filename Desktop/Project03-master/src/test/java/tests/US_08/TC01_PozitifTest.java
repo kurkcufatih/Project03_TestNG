@@ -1,7 +1,5 @@
 package tests.US_08;
 
-
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,6 +11,7 @@ import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ public class TC01_PozitifTest {
 
     @Test
     public void US08_TC01_StockAndOrderManagement_PozitifTest() throws InterruptedException, IOException {
+        
         Driver.getDriver().get(ConfigReader.getProperty("spendingGoodUrl"));
         SpendinGoodPage spendinGoodPage = new SpendinGoodPage();
 
@@ -47,15 +47,13 @@ public class TC01_PozitifTest {
 
         //kullanici dasboard kismindan products butonuna tiklar
         ReusableMethods.waitFor(3);
-        JavascriptExecutor jseProduct = (JavascriptExecutor) Driver.getDriver();
-        jseProduct.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
-        jseProduct.executeScript("arguments[0].click();", spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
-        spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu.click();
+        ReusableMethods.jsExecutorScrool(spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
+        ReusableMethods.jsExecutorClick(spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
 
         //kullanici stock miktarini degistirecegi urun uzerindeki edit buttonuna tiklar
         Thread.sleep(3000);
-        actions.sendKeys(Keys.PAGE_DOWN).sendKeys(Keys.PAGE_DOWN);
-        spendinGoodPage.urunUzerindekiEditButonu.click();
+        ReusableMethods.jsExecutorScrool(spendinGoodPage.urunUzerindekiEditButonu);
+        ReusableMethods.jsExecutorClick(spendinGoodPage.urunUzerindekiEditButonu);
 
         //kullanici Stock Qty kismina urun miktarini girer
         spendinGoodPage.stockQty.clear();
@@ -66,9 +64,8 @@ public class TC01_PozitifTest {
         select.selectByIndex(1);
 
         //kullanici submit butonuna tiklar
-        JavascriptExecutor jseSubmit = (JavascriptExecutor) Driver.getDriver();
-        jseSubmit.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakisubmitButonu);
-        jseSubmit.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakisubmitButonu);
+        ReusableMethods.jsExecutorScrool(spendinGoodPage.editProductKismindakisubmitButonu);
+        ReusableMethods.jsExecutorClick(spendinGoodPage.editProductKismindakisubmitButonu);
 
         //kullanici Product Successfully Published yazisini test eder
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
@@ -76,10 +73,8 @@ public class TC01_PozitifTest {
         Assert.assertTrue(spendinGoodPage.successfullyPublishedYazisi.isDisplayed());
 
         //kullanici view butonuna tiklar
-        JavascriptExecutor jseView = (JavascriptExecutor) Driver.getDriver();
-        jseView.executeScript("arguments[0].scrollIntoView(true);", spendinGoodPage.editProductKismindakiViewButonu);
-        jseView.executeScript("arguments[0].click();", spendinGoodPage.editProductKismindakiViewButonu);
-        spendinGoodPage.editProductKismindakiViewButonu.click();
+        ReusableMethods.jsExecutorScrool(spendinGoodPage.editProductKismindakiViewButonu);
+        ReusableMethods.jsExecutorClick(spendinGoodPage.editProductKismindakiViewButonu);
 
 
         //kullanici stock miktari ile girdigi stock miktarinin uyumlulugunu test eder.

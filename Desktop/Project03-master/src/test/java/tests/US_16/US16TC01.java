@@ -2,6 +2,7 @@ package tests.US_16;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
@@ -9,43 +10,60 @@ import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 
 public class US16TC01 extends TestBaseRapor {
-    SpendinGoodPage spendinggoodPage = new SpendinGoodPage();
+    page.SpendinGoodPage spendinggoodPage = new page.SpendinGoodPage();
 
     @Test
     public void spendinggoodManageCustomerTest() {
-        // https://spendinggood.com/store-manager/customers/
         extentTest = extentReports.createTest("Manage customers", "isim/ kullanıcı adi/ maili, adresi, harcama miktarı, son siparişleri görüldugu dogrulandi");
+        //Kullanici url e gidebilmeli
         Driver.getDriver().get(ConfigReader.getProperty("spendinggoodUrl"));
-        extentTest.info("Spendinggood sitesine gidildi.");
-        // Manage customers;
+        extentTest.info("Kullanici url e gidebildi.");
+        //Kullanici  sign in e tıklayabilmeli
         spendinggoodPage.signInButton.click();
-        spendinggoodPage.emailAdresBox.sendKeys(ConfigReader.getProperty("email"));
-        spendinggoodPage.passwordBox.sendKeys(ConfigReader.getProperty("password"));
+        extentTest.info("Kullanici  sign in e tıklayabildi.");
+        //Email adresini girebilmeli
+        spendinggoodPage.emailAdresBox.sendKeys(ConfigReader.getProperty("cihadEmail"));
+        extentTest.info("Email adresini girebildi.");
+        //Password girebilmeli
+        spendinggoodPage.passwordBox.sendKeys(ConfigReader.getProperty("cihadPassword"));
+        extentTest.info("Password girebildi.");
+        //Sign in butonuna tıklayabilmeli
         spendinggoodPage.signInButton2.click();
         ReusableMethods.waitFor(3);
-        extentTest.info("Kullanici girisi yapildi.");
+        extentTest.info("Sign in butonuna tıklayabildi.");
+        //My Account içinde Store Manager bölümüne girer
         spendinggoodPage.myAccountButton.click();
         spendinggoodPage.storeManager.click();
-        ReusableMethods.waitFor(2);
+        ReusableMethods.waitFor(1);
+        extentTest.info("My Account içinde Store Manager bölümüne gidebildi");
+        //Ardından Customers bölümüne girer
         ReusableMethods.jsExecutorScrool(spendinggoodPage.customers);
         ReusableMethods.jsExecutorClick(spendinggoodPage.customers);
-        extentTest.info("Customers bolumune girildi.");
-        // kayitli kisilerin isim/ kullanıcı adi/ maili, adresi, harcama miktarı, son siparişleri görülmeli
-        Assert.assertTrue(spendinggoodPage.kayitliKullaniciIsim.isDisplayed(), "kayitliKullaniciIsim is not Displayed!");
-        extentTest.info("Ilgili sayfada isim goruldugu dogrulandi.");
-        Assert.assertTrue(spendinggoodPage.kayitliKullaniciKullaniciAdi.isDisplayed(), "kayitliKullaniciKullaniciAdi is not Displayed!");
-        extentTest.info("Ilgili sayfada kullanıcı adi goruldugu dogrulandi.");
-        Assert.assertTrue(spendinggoodPage.kayitliKullaniciMail.isDisplayed(), "kayitliKullaniciMail is not Displayed!");
-        extentTest.info("Ilgili sayfada mail goruldugu dogrulandi.");
-        Assert.assertTrue(spendinggoodPage.kayitliKullaniciAdres.isDisplayed(), "kayitliKullaniciAdres is not Displayed!");
-        extentTest.info("Ilgili sayfada adres goruldugu dogrulandi.");
-        Assert.assertTrue(spendinggoodPage.kayitliKullaniciHarcamaMiktari.isDisplayed(), "kayitliKullaniciHarcamaMiktari is not Displayed!");
-        extentTest.info("Ilgili sayfada harcama miktari goruldugu dogrulandi.");
-        Assert.assertTrue(spendinggoodPage.kayitliKullaniciSonSiparis.isDisplayed(), "kayitliKullaniciSonSiparis is not Displayed!");
-        extentTest.info("Ilgili sayfada son siparis goruldugu dogrulandi.");
-
+        extentTest.info("Customers bölümüne gidebildi");
+        //kayitli kisilerin isim/ kullanıcı adi/ maili, adresi, harcama miktarı, son siparişleri görülmeli
+        SoftAssert softAssert = new SoftAssert();
+        //Girilen bölümde isminin görüldüğünü doğrular
+        softAssert.assertTrue(spendinggoodPage.kayitliKullaniciIsim.isDisplayed());
+        extentTest.info("Girilen bölümde isminin görüldüğünü doğrulandi");
+        //Girilen bölümde kullanıcı adının görüldüğünü doğrular
+        softAssert.assertTrue(spendinggoodPage.kayitliKullaniciIsim.isDisplayed());
+        extentTest.info("Girilen bölümde kullanıcı adının görüldüğünü doğrulandi");
+        //Girilen bölümde mail adresinin görüldüğünü doğrular
+        softAssert.assertTrue(spendinggoodPage.kayitliKullaniciMail.isDisplayed());
+        extentTest.info("Girilen bölümde mail adresinin görüldüğü doğrulandi");
+        //Girilen bölümde adres görüldüğünü doğrular
+        softAssert.assertTrue(spendinggoodPage.kayitliKullaniciAdres.isDisplayed());
+        extentTest.info("Girilen bölümde adres görüldüğü doğrulandi");
+        //Girilen bölümde harcama miktarının görüldüğünü doğrular
+        softAssert.assertTrue(spendinggoodPage.kayitliKullaniciHarcamaMiktari.isDisplayed());
+        extentTest.info("Girilen bölümde harcama miktarının görüldüğü doğrulandi");
+        //Girilen bölümde son siparişlerin görüldüğünü doğrular
+        softAssert.assertTrue(spendinggoodPage.kayitliKullaniciSonSiparis.isDisplayed());
+        extentTest.info("Girilen bölümde son siparişlerin görüldüğü doğrulandi");
+        softAssert.assertAll();
         extentTest.pass("spendinggoodManageCustomerTest PASS");
+        //Sayfayi kapatir
+        Driver.closeDriver();
+
     }
-
-
 }

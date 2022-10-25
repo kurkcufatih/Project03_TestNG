@@ -9,34 +9,53 @@ import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
+import utilities.TestBaseRapor;
 
-public class TC_01 {
+public class TC_01 extends TestBaseRapor {
     @Test
     public void testCase01() {
+        extentTest = extentReports.createTest("RequestID geri isteme istegi", "Vendor olarak RequestID geri isteme istegi olusturulabilmeli");
         SpendinGoodPage spendingPage=new SpendinGoodPage();
-        Actions actions = new Actions(Driver.getDriver());
-        JavascriptExecutor js= (JavascriptExecutor) Driver.getDriver();
 
         spendingPage.girisYap("oguzEmail","oguzPassword");
+        extentTest.info("Spendinggood sitesine gidildi, vendor olarak giris yapıldı");
         ReusableMethods.waitFor(3);
+
         spendingPage.myAccount.click();
-        js.executeScript("arguments[0].scrollIntoView(true);",spendingPage.dashboard);
+        extentTest.info("My Account butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.dashboard);
         ReusableMethods.waitFor(1);
         spendingPage.storeManager.click();
-        js.executeScript("arguments[0].scrollIntoView(true);",spendingPage.home);
+        extentTest.info("Store Manager butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.home);
         ReusableMethods.waitFor(1);
-        js.executeScript("arguments[0].click()",spendingPage.orders);
-        js.executeScript("arguments[0].scrollIntoView(true);",spendingPage.home);
+        ReusableMethods.jsExecutorClick(spendingPage.orders);
+        extentTest.info("Orders butonuna tıklandı");
+
+        ReusableMethods.jsExecutorScrool(spendingPage.home);
         ReusableMethods.waitFor(1);
         Assert.assertFalse(spendingPage.ordersListViewDetails.isEmpty());
+        extentTest.pass("Orders sayfasında orderların gorundugu dogrulandi");
         ReusableMethods.waitFor(1);
+
         ReusableMethods.jsExecutorScrool(spendingPage.refundRequest);
-        js.executeScript("arguments[0].click()",spendingPage.refundRequest);
+        ReusableMethods.jsExecutorClick(spendingPage.refundRequest);
+        extentTest.info("Refund request butonuna tıklandı");
         ReusableMethods.waitFor(1);
+
         Select select = new Select(spendingPage.refundRequestDropDown);
         ReusableMethods.waitFor(1);
         select.selectByIndex(0);
+        extentTest.info("Full refund secenegi secildi");
+
         spendingPage.refundRequestReasonTextBox.sendKeys("Magazamizdan kaynakl bir sorundan dolayı urununuz gonderilememektedir.");
+        extentTest.info("Reason kısmına açıklama girildi");
+
         //spendingPage.refundRequestSubmitButton.click();
+        extentTest.pass("Submit butonuna tıklandı");
+
+
     }
 }

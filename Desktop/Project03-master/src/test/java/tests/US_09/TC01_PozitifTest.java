@@ -1,8 +1,5 @@
 package tests.US_09;
 
-import org.apache.poi.hpsf.ReadingNotSupportedException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -12,6 +9,7 @@ import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
+import utilities.TestBaseRapor;
 
 
 public class TC01_PozitifTest {
