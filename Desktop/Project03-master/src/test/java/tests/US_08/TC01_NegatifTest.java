@@ -1,4 +1,5 @@
 package tests.US_08;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,6 +11,7 @@ import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
+import utilities.TestBaseRapor;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -46,9 +48,7 @@ public class TC01_NegatifTest {
 
         //kullanici dasboard kismindan products butonuna tiklar
         ReusableMethods.waitFor(3);
-        ReusableMethods.jsExecutorScrool(spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
-        ReusableMethods.jsExecutorClick(spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
-
+        spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu.click();
 
         //kullanici stock miktarini degistirecegi urun uzerindeki edit buttonuna tiklar
         Thread.sleep(3000);
@@ -64,16 +64,14 @@ public class TC01_NegatifTest {
         select.selectByIndex(1);
 
         //kullanici submit butonuna tiklar
-        ReusableMethods.jsExecutorScrool(spendinGoodPage.editProductKismindakisubmitButonu);
         ReusableMethods.jsExecutorClick(spendinGoodPage.editProductKismindakisubmitButonu);
 
         //kullanici Product Successfully Published yazisini test eder
-        WebDriverWait wait =new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(spendinGoodPage.successfullyPublishedYazisi));
         Assert.assertTrue(spendinGoodPage.successfullyPublishedYazisi.isDisplayed());
 
         //kullanici view butonuna tiklar
-        ReusableMethods.jsExecutorScrool(spendinGoodPage.editProductKismindakiViewButonu);
         ReusableMethods.jsExecutorClick(spendinGoodPage.editProductKismindakiViewButonu);
 
         //kullanici stock miktari ile girdigi stock miktarinin uyumlulugunu test eder.

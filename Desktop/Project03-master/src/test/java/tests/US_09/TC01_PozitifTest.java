@@ -9,8 +9,6 @@ import page.SpendinGoodPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
-import utilities.TestBaseRapor;
-
 
 public class TC01_PozitifTest {
     @Test
@@ -40,8 +38,7 @@ public class TC01_PozitifTest {
         Thread.sleep(2000);
 
         //kullanici dashborddan settings butonuna tiklar
-         spendinGoodPage.dashboardSettings.click();
-
+        spendinGoodPage.dashboardSettings.click();
 
         //kullanici settings anabasliginin altindaki seceneklerden shipping buttonuna tiklar
         spendinGoodPage.settingButonunaTikladiktanSonraCikanShippingButonu.click();
@@ -54,10 +51,9 @@ public class TC01_PozitifTest {
         ReusableMethods.waitFor(5);
         spendinGoodPage.saveButonu.click();
 
-
         //Settings saved successfully yazisinin ciktigini test eder
         ReusableMethods.waitFor(5);
-        String actualYazi=spendinGoodPage.savedSuccessfullyYazisi.getText();
+        String actualYazi = spendinGoodPage.savedSuccessfullyYazisi.getText();
         Assert.assertEquals(actualYazi, "Settings saved successfully");
 
     }

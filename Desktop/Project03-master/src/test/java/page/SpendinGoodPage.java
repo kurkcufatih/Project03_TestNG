@@ -298,7 +298,7 @@ public class SpendinGoodPage {
 
 
     /*US_08(301. ile 339.satır)*/
-    @FindBy(xpath = "//main//div//div[@class='wcfm_menu_items wcfm_menu_wcfm-products']")
+    @FindBy(xpath = "//*[@class='wcfm_menu_items wcfm_menu_wcfm-products']")
     public WebElement storageManagerButonunaTikladiktanSonraCikanProductButtonu;
     @FindBy(xpath = "//span[@class='wcfmfa fa-edit text_tip']")
     public WebElement urunUzerindekiEditButonu;

@@ -22,7 +22,6 @@ public class TC01_PozitifTest {
 
     @Test
     public void US08_TC01_StockAndOrderManagement_PozitifTest() throws InterruptedException, IOException {
-        
         Driver.getDriver().get(ConfigReader.getProperty("spendingGoodUrl"));
         SpendinGoodPage spendinGoodPage = new SpendinGoodPage();
 
@@ -47,12 +46,10 @@ public class TC01_PozitifTest {
 
         //kullanici dasboard kismindan products butonuna tiklar
         ReusableMethods.waitFor(3);
-        ReusableMethods.jsExecutorScrool(spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
-        ReusableMethods.jsExecutorClick(spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu);
+        spendinGoodPage.storageManagerButonunaTikladiktanSonraCikanProductButtonu.click();
 
         //kullanici stock miktarini degistirecegi urun uzerindeki edit buttonuna tiklar
-        Thread.sleep(3000);
-        ReusableMethods.jsExecutorScrool(spendinGoodPage.urunUzerindekiEditButonu);
+        ReusableMethods.waitFor(3);
         ReusableMethods.jsExecutorClick(spendinGoodPage.urunUzerindekiEditButonu);
 
         //kullanici Stock Qty kismina urun miktarini girer
@@ -64,7 +61,6 @@ public class TC01_PozitifTest {
         select.selectByIndex(1);
 
         //kullanici submit butonuna tiklar
-        ReusableMethods.jsExecutorScrool(spendinGoodPage.editProductKismindakisubmitButonu);
         ReusableMethods.jsExecutorClick(spendinGoodPage.editProductKismindakisubmitButonu);
 
         //kullanici Product Successfully Published yazisini test eder
@@ -73,9 +69,7 @@ public class TC01_PozitifTest {
         Assert.assertTrue(spendinGoodPage.successfullyPublishedYazisi.isDisplayed());
 
         //kullanici view butonuna tiklar
-        ReusableMethods.jsExecutorScrool(spendinGoodPage.editProductKismindakiViewButonu);
         ReusableMethods.jsExecutorClick(spendinGoodPage.editProductKismindakiViewButonu);
-
 
         //kullanici stock miktari ile girdigi stock miktarinin uyumlulugunu test eder.
         List<String> handelsList = new ArrayList<>(Driver.getDriver().getWindowHandles());
